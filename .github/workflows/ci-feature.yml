@@ -1,0 +1,39 @@
+name: CI - Feature Branch
+
+# Trigger CI when pushing to feature branch
+on:
+  push:
+    branches:
+      - feature
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.11'
+        
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+        
+    - name: Run linting (flake8)
+      run: |
+        pip install flake8
+        flake8 app.py test_app.py --max-line-length=100 || true
+        
+    - name: Run tests
+      run: |
+        pytest test_app.py -v
+        
+    - name: Display success message
+      run: |
+        echo "✅ CI passed for feature branch!"
+        echo "All tests completed successfully"

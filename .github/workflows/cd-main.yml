@@ -50,7 +50,7 @@ jobs:
         echo "Commit: ${{ github.sha }}" >> deployment/deployment-info.txt
         
     - name: Upload deployment artifact
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: deployment-package
         path: deployment/

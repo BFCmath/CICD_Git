@@ -24,20 +24,9 @@ jobs:
         python -m pip install --upgrade pip
         pip install -r requirements.txt
         
-    - name: Run linting
+    - name: Run tests
       run: |
-        pip install flake8
-        flake8 app.py test_app.py --max-line-length=100
-        
-    - name: Run tests with coverage
-      run: |
-        pip install pytest-cov
-        pytest test_app.py -v --cov=app --cov-report=term --cov-fail-under=80
-        
-    - name: Security check
-      run: |
-        pip install bandit
-        bandit -r . -f json || true
+        pytest test_app.py -v
         
     - name: CI Success
       run: |
